@@ -1,2 +1,1 @@
-# aprendendo-typescript
-Meus primeiros passos no Type!
+Meus primeiros passos no type haha!
