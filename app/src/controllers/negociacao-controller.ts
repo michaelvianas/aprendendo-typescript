@@ -14,16 +14,17 @@ export class NegociacaoController {
 
     constructor() {
         this.inputData = <HTMLInputElement>document.querySelector('#data');
-        this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement;
-        this.inputValor = document.querySelector('#valor') as HTMLInputElement;
+        this.inputQuantidade = <HTMLInputElement>document.querySelector('#quantidade');
+        this.inputValor = <HTMLInputElement>document.querySelector('#valor');
         this.negociacoesView.update(this.negociacoes);
     }
 
-    public adiciona(): void {
+    public adicionar(): void {
+        const t1 = performance.now();
         /*
             Zé, você já viu isso?
         */
-        const negociacao = Negociacao.criaDe(
+        const negociacao = Negociacao.criarDe(
             this.inputData.value, 
             this.inputQuantidade.value,
             this.inputValor.value
@@ -35,9 +36,13 @@ export class NegociacaoController {
             return ;
         }
 
-        this.negociacoes.adiciona(negociacao);
+        this.negociacoes.adicionar(negociacao);
         this.limparFormulario();
-        this.atualizaView();
+        this.atualizarView();
+
+        const t2 = performance.now();
+
+        console.log(`Tempo de execução do método adiciona: ${(t2-t1)/1000} segundos`);
     }
 
     private ehDiaUtil(data: Date) {
@@ -52,7 +57,7 @@ export class NegociacaoController {
         this.inputData.focus();
     }
 
-    private atualizaView(): void {
+    private atualizarView(): void {
         this.negociacoesView.update(this.negociacoes);
         this.mensagemView.update('Negociação adicionada com sucesso');
     }
